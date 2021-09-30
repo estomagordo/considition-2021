@@ -2,7 +2,11 @@
 import api
 import json
 
-api_key = ""   # TODO: Your api key here
+api_key = ""
+
+with open('secret') as f:
+	api_key = f.readline().rstrip()
+
 # The different map names can be found on considition.com/rules
 # TODO: You map choice here. Unless changed, the map "training1" will be selected.
 map_name = "training1"
