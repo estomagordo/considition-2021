@@ -1,4 +1,4 @@
-﻿from greedy_solver import GreedySolver
+﻿from greedy_solver_copy import GreedySolver
 import api
 import json
 
