@@ -1,3 +1,5 @@
+from itertools import permutations
+
 class BruteSolver:
     placed_packages = []
 
@@ -28,35 +30,38 @@ class BruteSolver:
         return self.placed_packages
 
     def place_package(self, package):
-        for x in range(self.vehicle_length - package['length']):
-            for y in range(self.vehicle_width - package['width']):
-                for z in range(self.vehicle_height - package['height']):
-                    
-                    valid = True
+        dimensions = sorted([package['length'], package['width'], package['height']])
 
-                    for dx in range(package['length']):
-                        if not valid:
-                            break
-                        for dy in range(package['width']):
+        for p in permutations(dimensions):
+            for x in range(self.vehicle_length - p[0]):
+                for y in range(self.vehicle_width - p[1]):
+                    for z in range(self.vehicle_height - p[2]):
+                        
+                        valid = True
+
+                        for dx in range(p[0]):
                             if not valid:
                                 break
-                            for dz in range(package['height']):
-                                if self.space[x+dx][y+dy][z+dz]:
-                                    valid = False
+                            for dy in range(p[1]):
+                                if not valid:
                                     break
+                                for dz in range(p[2]):
+                                    if self.space[x+dx][y+dy][z+dz]:
+                                        valid = False
+                                        break
 
-                    if valid:
-                        for dx in range(package['length']):
-                            for dy in range(package['width']):
-                                for dz in range(package['height']):
-                                    self.space[x+dx][y+dy][z+dz] = True
+                        if valid:
+                            for dx in range(p[0]):
+                                for dy in range(p[1]):
+                                    for dz in range(p[2]):
+                                        self.space[x+dx][y+dy][z+dz] = True
 
-                        self.placed_packages.append({'id': package['id'], 'x1': x, 'x2': x, 'x3': x, 'x4': x,
-                                    'x5': x + package['length'], 'x6': x + package['length'], 'x7': x + package['length'], 'x8': x + package['length'],
-                                    'y1': y, 'y2': y, 'y3': y, 'y4': y,
-                                    'y5': y + package['width'], 'y6': y + package['width'], 'y7': y + package['width'], 'y8': y + package['width'],
-                                    'z1': z, 'z2': z, 'z3': z, 'z4': z,
-                                    'z5': z + package['height'], 'z6': z + package['height'], 'z7': z + package['height'], 'z8': z + package['height'], 'weightClass': package['weightClass'], 'orderClass': package['orderClass']})
+                            self.placed_packages.append({'id': package['id'], 'x1': x, 'x2': x, 'x3': x, 'x4': x,
+                                        'x5': x + p[0], 'x6': x + p[0], 'x7': x + p[0], 'x8': x + p[0],
+                                        'y1': y, 'y2': y, 'y3': y, 'y4': y,
+                                        'y5': y + p[1], 'y6': y + p[1], 'y7': y + p[1], 'y8': y + p[1],
+                                        'z1': z, 'z2': z, 'z3': z, 'z4': z,
+                                        'z5': z + p[2], 'z6': z + p[2], 'z7': z + p[2], 'z8': z + p[2], 'weightClass': package['weightClass'], 'orderClass': package['orderClass']})
 
-                        return True
+                            return True
         return False
