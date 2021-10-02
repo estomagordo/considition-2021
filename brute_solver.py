@@ -7,9 +7,12 @@ class BruteSolver:
         self.vehicle_length = game_info['vehicle']['length']
         self.vehicle_width = game_info['vehicle']['width']
         self.vehicle_height = game_info['vehicle']['height']
-        self.packages = sorted(game_info['dimensions'], key=lambda package: [-package['height'] * package['width'], -package['weightClass'], -package['orderClass']])
+        self.packages = sorted(game_info['dimensions'], key=lambda package: self.prioritizer(package))
         
         self.create_space()
+
+    def prioritizer(self, package):
+        return -package['height'] * package['height'] - 500 * package['weightClass'] - 100 * package['orderClass']
 
     def create_space(self):
         self.space = []
