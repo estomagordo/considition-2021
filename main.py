@@ -15,8 +15,9 @@ map_name = "training1"
 def main():
 	print("Starting game...")
 	response = api.new_game(api_key, map_name)
-	greedy = GreedySolver(game_info=response)
-	solution = greedy.Solve()
+	print(response['mapName'], response['vehicle'])
+	solver = GreedySolver(game_info=response)
+	solution = solver.Solve()
 	submit_game_response = api.submit_game(api_key, map_name, solution)
 	print(submit_game_response)
 if __name__ == "__main__":

@@ -33,9 +33,24 @@ class GreedySolver:
         self.otherPackages = sorted(
             self.otherPackages, key=lambda i: (i['area'], -i['class']))
 
+    def score(self):
+        return (self.length_score + self.order_score + self.weight_score) * self.packing_efficiency_multiplier
+
+    def length_score(self):
+        return self.vehicle_length - self.lastKnownMaxLength
+
+    def order_score(self):
+        pass
+
+    def weight_score(self):
+        pass
+
+    def packing_efficiency_multiplier(self):
+        pass
+    
     def Solve(self):
         for p in self.packages:
-            if(self.zp <= self.lastKnownMaxHeight):
+            if(self.zp <= self.lastKnownMaxHeight and self.heavyPackages):
                 id = self.heavyPackages.pop()["id"]
                 package = self.packages[id]
             elif(len(self.otherPackages) != 0):
@@ -66,6 +81,7 @@ class GreedySolver:
 
             else:
                 print("Something went terribly wrong!")
+                print(f'Loaded {len(self.placedPackages)} out of {len(self.packages)}')
                 break
             self.SetMaxX(package)
             self.SetMaxY(package)
