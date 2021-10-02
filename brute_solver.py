@@ -20,9 +20,10 @@ class BruteSolver:
             self.space.append(plane)
 
     def Solve(self):
-        for i, package in enumerate(self.packages()):
+        for i, package in enumerate(self.packages):
             if not self.place_package(package):
                 print('TRAGEDY on parcel', i)
+            print('Placed package', i)
 
         return self.placed_packages
 
@@ -45,6 +46,11 @@ class BruteSolver:
                                     break
 
                     if valid:
+                        for dx in range(package['length']):
+                            for dy in range(package['width']):
+                                for dz in range(package['height']):
+                                    self.space[x+dx][y+dy][z+dz] = True
+
                         self.placed_packages.append({'id': package['id'], 'x1': x, 'x2': x, 'x3': x, 'x4': x,
                                     'x5': x + package['length'], 'x6': x + package['length'], 'x7': x + package['length'], 'x8': x + package['length'],
                                     'y1': y, 'y2': y, 'y3': y, 'y4': y,

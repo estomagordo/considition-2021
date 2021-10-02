@@ -1,4 +1,5 @@
 ﻿from greedy_solver_copy import GreedySolver
+from brute_solver import BruteSolver
 import api
 import json
 
@@ -16,7 +17,7 @@ def main():
 	print("Starting game...")
 	response = api.new_game(api_key, map_name)
 	print(response['mapName'], response['vehicle'])
-	solver = GreedySolver(game_info=response)
+	solver = BruteSolver(game_info=response)
 	solution = solver.Solve()
 	submit_game_response = api.submit_game(api_key, map_name, solution)
 	print(submit_game_response)
