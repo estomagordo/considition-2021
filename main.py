@@ -1,6 +1,7 @@
 ﻿import api
 
 from brute_solver import BruteSolver
+from collections import defaultdict
 from greedy_solver_copy import GreedySolver
 from random import Random
 from sys import argv
@@ -16,17 +17,21 @@ def main():
 	t = time()
 	rand = Random()
 	times = int(argv[1])
+	bestfor = defaultdict(int)
 
 	for iteration in range(times):
-		area_weight = rand.gauss(1.0, 0.2)
-		weight_class_weight = rand.gauss(500.0, 125.0)
-		order_class_weight = rand.gauss(150.0, 35.0)
+		area_weight = rand.gauss(1.05, 0.2)
+		weight_class_weight = rand.gauss(400.0, 45.0)
+		order_class_weight = rand.gauss(225.0, 35.0)
 		print(f'iteration: {iteration+1}/{times} after {round(time()-t, 3)} seconds, with area weight: {area_weight}, weight class weight: {weight_class_weight}, order class weight: {order_class_weight}')
+		print(bestfor)
+
 		for map_name in ('training1', 'training2'):
 			response = api.new_game(api_key, map_name)
 			solver = BruteSolver(response, area_weight, weight_class_weight, order_class_weight)
 			solution = solver.Solve()
 			submit_game_response = api.submit_game(api_key, map_name, solution)
+			bestfor[map_name] = max(bestfor[map_name], submit_game_response['score'])
 			print(map_name, submit_game_response)
 
 if __name__ == "__main__":

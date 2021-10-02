@@ -40,26 +40,26 @@ class BruteSolver:
 
         for p in permutations(dimensions):
             for x in range(self.vehicle_length - p[0]):
-                for y in range(self.vehicle_width - p[1]):
-                    for z in range(self.vehicle_height - p[2]):
+                for z in range(self.vehicle_height - p[2]):
+                    for y in range(self.vehicle_width - p[1]):
                         
                         valid = True
 
                         for dx in range(p[0]):
                             if not valid:
                                 break
-                            for dy in range(p[1]):
+                            for dz in range(p[2]):
                                 if not valid:
                                     break
-                                for dz in range(p[2]):
+                                for dy in range(p[1]):
                                     if self.space[x+dx][y+dy][z+dz]:
                                         valid = False
                                         break
 
                         if valid:
                             for dx in range(p[0]):
-                                for dy in range(p[1]):
-                                    for dz in range(p[2]):
+                                for dz in range(p[2]):
+                                    for dy in range(p[1]):
                                         self.space[x+dx][y+dy][z+dz] = True
 
                             self.placed_packages.append({'id': package['id'], 'x1': x, 'x2': x, 'x3': x, 'x4': x,
