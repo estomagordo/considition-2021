@@ -4,6 +4,7 @@ from brute_solver import BruteSolver
 from greedy_solver_copy import GreedySolver
 from random import Random
 from sys import argv
+from time import time
 
 api_key = ""
 
@@ -12,6 +13,7 @@ with open('secret') as f:
 
 
 def main():
+	t = time()
 	rand = Random()
 	times = int(argv[1])
 
@@ -19,7 +21,7 @@ def main():
 		area_weight = rand.gauss(1.0, 0.2)
 		weight_class_weight = rand.gauss(500.0, 125.0)
 		order_class_weight = rand.gauss(150.0, 35.0)
-		print(f'iteration: {iteration+1} out of {times} with area weight: {area_weight}, weight class weight: {weight_class_weight}, order class weight: {order_class_weight}')
+		print(f'iteration: {iteration+1}/{times} after {round(time()-t, 3)} seconds, with area weight: {area_weight}, weight class weight: {weight_class_weight}, order class weight: {order_class_weight}')
 		for map_name in ('training1', 'training2'):
 			response = api.new_game(api_key, map_name)
 			solver = BruteSolver(response, area_weight, weight_class_weight, order_class_weight)
