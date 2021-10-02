@@ -5,7 +5,7 @@ class BruteSolver:
         self.vehicle_length = game_info['vehicle']['length']
         self.vehicle_width = game_info['vehicle']['width']
         self.vehicle_height = game_info['vehicle']['height']
-        self.packages = game_info['dimensions']
+        self.packages = sorted(game_info['dimensions'], key=lambda package: [-package['weightClass'], -package['orderClass']])
         
         self.create_space()
 
