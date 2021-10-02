@@ -9,7 +9,7 @@ api_key = ""
 
 with open('secret') as f:
 	api_key = f.readline().rstrip()
-	
+
 
 def main():
 	rand = Random()

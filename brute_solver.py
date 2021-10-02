@@ -1,9 +1,8 @@
 from itertools import permutations
 
 class BruteSolver:
-    placed_packages = []
-
     def __init__(self, game_info, area_weight, weight_class_weight, order_class_weight):
+        self.placed_packages = []
         self.vehicle_length = game_info['vehicle']['length']
         self.vehicle_width = game_info['vehicle']['width']
         self.vehicle_height = game_info['vehicle']['height']
