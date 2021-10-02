@@ -23,7 +23,7 @@ class BruteSolver:
         for i, package in enumerate(self.packages):
             if not self.place_package(package):
                 print('TRAGEDY on parcel', i)
-            print('Placed package', i)
+            print('Placed package', i+1, 'out of', len(self.packages))
 
         return self.placed_packages
 
