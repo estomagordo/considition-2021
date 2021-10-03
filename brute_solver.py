@@ -1,19 +1,23 @@
 from itertools import permutations
+from math import e
 
 class BruteSolver:
-    def __init__(self, game_info, area_weight, weight_class_weight, order_class_weight):
-        self.placed_packages = []
+    def __init__(self, game_info, area_weight, weight_class_weight, order_class_weight, shake):
         self.vehicle_length = game_info['vehicle']['length']
         self.vehicle_width = game_info['vehicle']['width']
         self.vehicle_height = game_info['vehicle']['height']
         self.area_weight = area_weight
         self.weight_class_weight = weight_class_weight
         self.order_class_weight = order_class_weight
+        self.shake = shake
+        self.reset()        
 
         self.packages = sorted(game_info['dimensions'], key=lambda package: self.prioritizer(package))
-        
-        self.create_space()
 
+    def reset(self):
+        self.placed_packages = []
+        self.create_space()
+    
     def prioritizer(self, package):
         return self.area_weight * -package['height'] * package['width'] - self.weight_class_weight * (package['weightClass']+1) - self.order_class_weight * (package['orderClass']+1)
 
@@ -28,12 +32,24 @@ class BruteSolver:
             self.space.append(plane)
 
     def Solve(self):
-        for i, package in enumerate(self.packages):
-            if not self.place_package(package):
-                print('TRAGEDY on parcel', i)
-            # print('Placed package', i+1, 'out of', len(self.packages))
+        if self.shake:
+            for x in range(1, len(self.packages)):
+                package_list = list(self.packages)
+                package_list[x-1], package_list[x] = package_list[x], package_list[x-1]
+                for i, package in enumerate(package_list):
+                    if not self.place_package(package):
+                        print('TRAGEDY on parcel', i)
+                    # print('Placed package', i+1, 'out of', len(self.packages))
 
-        return self.placed_packages
+                yield self.placed_packages
+                self.reset()
+        else:
+            for i, package in enumerate(self.packages):
+                if not self.place_package(package):
+                    print('TRAGEDY on parcel', i)
+                # print('Placed package', i+1, 'out of', len(self.packages))
+
+            yield self.placed_packages
 
     def place_package(self, package):
         dimensions = sorted([package['length'], package['height'], package['width']])
