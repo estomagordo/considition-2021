@@ -21,9 +21,9 @@ def main():
 	bestfor = defaultdict(int)
 
 	for iteration in range(times):
-		area_weight = rand.gauss(1.01, 0.14)
-		weight_class_weight = rand.gauss(590.0, 125.0)
-		order_class_weight = rand.gauss(275.0, 65.0)
+		area_weight = rand.gauss(1.01, 0.24)
+		weight_class_weight = rand.gauss(520.0, 145.0)
+		order_class_weight = rand.gauss(375.0, 115.0)
 		print(f'iteration: {iteration+1}/{times} after {round(time()-t, 3)} seconds, with area weight: {area_weight}, weight class weight: {weight_class_weight}, order class weight: {order_class_weight}')
 		print(bestfor)
 
