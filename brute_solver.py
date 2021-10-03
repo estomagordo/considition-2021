@@ -36,7 +36,7 @@ class BruteSolver:
         return self.placed_packages
 
     def place_package(self, package):
-        dimensions = sorted([package['length'], package['width'], package['height']])
+        dimensions = sorted([package['length'], package['height'], package['width']])
 
         for p in permutations(dimensions):
             for x in range(self.vehicle_length - p[0]):
