@@ -15,7 +15,7 @@ class BruteSolver:
         self.create_space()
 
     def prioritizer(self, package):
-        return self.area_weight * -package['height'] * package['width'] - self.weight_class_weight * package['weightClass'] - self.order_class_weight * package['orderClass']
+        return self.area_weight * -package['height'] * package['width'] - self.weight_class_weight * (package['weightClass']+1) - self.order_class_weight * (package['orderClass']+1)
 
     def create_space(self):
         self.space = []
