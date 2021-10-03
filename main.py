@@ -3,7 +3,7 @@
 from brute_solver import BruteSolver
 from collections import defaultdict
 from greedy_solver_copy import GreedySolver
-from random import Random
+from random import Random, shuffle
 from sys import argv
 from time import time
 
@@ -17,16 +17,17 @@ def main():
 	t = time()
 	rand = Random()
 	times = int(argv[1])
+	maps = argv[2:]
 	bestfor = defaultdict(int)
 
 	for iteration in range(times):
-		area_weight = rand.gauss(1.11, 0.24)
-		weight_class_weight = rand.gauss(590.0, 225.0)
-		order_class_weight = rand.gauss(325.0, 115.0)
+		area_weight = rand.gauss(1.01, 0.14)
+		weight_class_weight = rand.gauss(590.0, 125.0)
+		order_class_weight = rand.gauss(275.0, 65.0)
 		print(f'iteration: {iteration+1}/{times} after {round(time()-t, 3)} seconds, with area weight: {area_weight}, weight class weight: {weight_class_weight}, order class weight: {order_class_weight}')
 		print(bestfor)
 
-		for map_name in ('training1', 'training2'):
+		for map_name in maps:
 			response = api.new_game(api_key, map_name)
 			solver = BruteSolver(response, area_weight, weight_class_weight, order_class_weight)
 			solution = solver.Solve()
