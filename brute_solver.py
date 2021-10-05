@@ -55,9 +55,9 @@ class BruteSolver:
         dimensions = sorted([package['length'], package['height'], package['width']])
 
         for p in permutations(dimensions):
-            for x in range(self.vehicle_length - p[0]):
-                for z in range(self.vehicle_height - p[2]):
-                    for y in range(self.vehicle_width - p[1]):
+            for x in range(self.vehicle_length+1 - p[0]):
+                for z in range(self.vehicle_height+1 - p[2]):
+                    for y in range(self.vehicle_width+1 - p[1]):
                         
                         valid = True
 
