@@ -22,9 +22,12 @@ def main():
 	bestfor = defaultdict(int)
 
 	for iteration in range(times):
-		volume_weight = rand.gauss(0.90, 0.04)
-		weight_class_weight = rand.gauss(9437.0, 2221.0)
-		order_class_weight = rand.gauss(7569.0, 1112.0)
+		volume_weight = rand.gauss(0.90, 0.29)
+		weight_class_weight = rand.gauss(13437.0, 2821.0)
+		order_class_weight = rand.gauss(9969.0, 2112.0)
+		volume_weight = 0.8166920792716333
+		weight_class_weight = 15736.434985654178
+		order_class_weight = 10522.958876387987
 		print(f'iteration: {iteration+1}/{times} after {round(time()-t, 3)} seconds, with volume weight: {volume_weight}, weight class weight: {weight_class_weight}, order class weight: {order_class_weight}')
 		print(bestfor)
 
