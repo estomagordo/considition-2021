@@ -22,15 +22,15 @@ def main():
 	bestfor = defaultdict(int)
 
 	for iteration in range(times):
-		area_weight = rand.gauss(0.90, 0.04)
-		weight_class_weight = rand.gauss(437.0, 21.0)
-		order_class_weight = rand.gauss(569.0, 12.0)
-		print(f'iteration: {iteration+1}/{times} after {round(time()-t, 3)} seconds, with area weight: {area_weight}, weight class weight: {weight_class_weight}, order class weight: {order_class_weight}')
+		volume_weight = rand.gauss(0.90, 0.04)
+		weight_class_weight = rand.gauss(9437.0, 2221.0)
+		order_class_weight = rand.gauss(7569.0, 1112.0)
+		print(f'iteration: {iteration+1}/{times} after {round(time()-t, 3)} seconds, with volume weight: {volume_weight}, weight class weight: {weight_class_weight}, order class weight: {order_class_weight}')
 		print(bestfor)
 
 		for map_name in maps:
 			response = api.new_game(api_key, map_name)
-			solver = BruteSolver(response, area_weight, weight_class_weight, order_class_weight, shake)
+			solver = BruteSolver(response, volume_weight, weight_class_weight, order_class_weight, shake)
 			for solution in solver.Solve():
 				submit_game_response = api.submit_game(api_key, map_name, solution)
 				bestfor[map_name] = max(bestfor[map_name], submit_game_response['score'])

@@ -2,11 +2,11 @@ from itertools import permutations
 from math import e
 
 class BruteSolver:
-    def __init__(self, game_info, area_weight, weight_class_weight, order_class_weight, shake):
+    def __init__(self, game_info, volume_weight, weight_class_weight, order_class_weight, shake):
         self.vehicle_length = game_info['vehicle']['length']
         self.vehicle_width = game_info['vehicle']['width']
         self.vehicle_height = game_info['vehicle']['height']
-        self.area_weight = area_weight
+        self.volume_weight = volume_weight
         self.weight_class_weight = weight_class_weight
         self.order_class_weight = order_class_weight
         self.shake = shake
@@ -19,7 +19,7 @@ class BruteSolver:
         self.create_space()
     
     def prioritizer(self, package):
-        return self.area_weight * -package['height'] * package['width'] - self.weight_class_weight * (package['weightClass']+1) - self.order_class_weight * (package['orderClass']+1)
+        return self.volume_weight * -package['height'] * package['width'] * package['length'] - self.weight_class_weight * (package['weightClass']+1) - self.order_class_weight * (package['orderClass']+1)
 
     def create_space(self):
         self.space = []
