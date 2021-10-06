@@ -4,4 +4,8 @@ volume weight: 0.8166920792716333, weight class weight: 15736.434985654178, orde
 
 TODO: package welding!
 
-Also, maybe try and make light packages as tall as possible?
+TODO: Also, maybe try and make light packages as tall as possible?
+
+TODO: Max dimensions post weld?
+
+TODO: Hill climbing.
