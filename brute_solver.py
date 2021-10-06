@@ -2,7 +2,7 @@ from itertools import permutations
 from math import e
 
 class BruteSolver:
-    def __init__(self, game_info, volume_weight, weight_class_weight, order_class_weight, shake):
+    def __init__(self, game_info, volume_weight, weight_class_weight, order_class_weight, shake, weld):
         self.vehicle_length = game_info['vehicle']['length']
         self.vehicle_width = game_info['vehicle']['width']
         self.vehicle_height = game_info['vehicle']['height']
@@ -10,13 +10,21 @@ class BruteSolver:
         self.weight_class_weight = weight_class_weight
         self.order_class_weight = order_class_weight
         self.shake = shake
+        self.weld = weld
         self.reset()        
 
-        self.packages = sorted(game_info['dimensions'], key=lambda package: self.prioritizer(package))
+        self.packages = self.packager(game_info['dimensions'])
+        self.packages.sort(key=lambda package: self.prioritizer(package))
 
     def reset(self):
         self.placed_packages = []
         self.create_space()
+
+    def package(self, raw_package):
+        
+
+    def packager(self, raw_packages):
+
     
     def prioritizer(self, package):
         return self.volume_weight * -package['height'] * package['width'] * package['length'] - self.weight_class_weight * (package['weightClass']+1) - self.order_class_weight * (package['orderClass']+1)

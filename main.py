@@ -17,7 +17,8 @@ def main():
 	t = time()
 	rand = Random()
 	times = int(argv[1])
-	maps = argv[2:-1]
+	maps = argv[2:-2]
+	weld = argv[-2] == 'weld'
 	shake = argv[-1] == 'shake'
 	bestfor = defaultdict(int)
 
@@ -33,7 +34,7 @@ def main():
 
 		for map_name in maps:
 			response = api.new_game(api_key, map_name)
-			solver = BruteSolver(response, volume_weight, weight_class_weight, order_class_weight, shake)
+			solver = BruteSolver(response, volume_weight, weight_class_weight, order_class_weight, shake, weld)
 			for solution in solver.Solve():
 				submit_game_response = api.submit_game(api_key, map_name, solution)
 				bestfor[map_name] = max(bestfor[map_name], submit_game_response['score'])

@@ -3,3 +3,5 @@
 volume weight: 0.8166920792716333, weight class weight: 15736.434985654178, order class weight: 10522.958876387987
 
 TODO: package welding!
+
+Also, maybe try and make light packages as tall as possible?
