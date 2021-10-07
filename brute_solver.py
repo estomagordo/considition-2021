@@ -43,7 +43,7 @@ class BruteSolver:
         return packages
     
     def prioritizer(self, package):
-        return self.volume_weight * -package.volum() - self.weight_class_weight * (package.weight_class+1) - self.order_class_weight * (package.order_class+1)
+        return self.volume_weight * -package.volume() - self.weight_class_weight * (package.weight_class+1) - self.order_class_weight * (package.order_class+1)
 
     def create_space(self):
         self.space = []
