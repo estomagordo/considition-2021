@@ -107,7 +107,7 @@ class BruteSolver:
                                             'y1': y+y1, 'y2': y+y1, 'y3': y+y1, 'y4': y+y1,
                                             'y5': y+y2, 'y6': y+y2, 'y7': y+y2, 'y8': y+y2,
                                             'z1': z+z1, 'z2': z+z1, 'z3': z+z1, 'z4': z+z1,
-                                            'z5': z+z2, 'z6': z+z2, 'z7': z+z2, 'z8': z+x2, 'weightClass': weight_class, 'orderClass': order_class})
+                                            'z5': z+z2, 'z6': z+z2, 'z7': z+z2, 'z8': z+z2, 'weightClass': weight_class, 'orderClass': order_class})
 
                             return True
             package.rotate()

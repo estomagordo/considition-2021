@@ -36,6 +36,7 @@ def main():
 			response = api.new_game(api_key, map_name)
 			solver = BruteSolver(response, volume_weight, weight_class_weight, order_class_weight, shake, weld)
 			for solution in solver.Solve():
+				print(solution)
 				submit_game_response = api.submit_game(api_key, map_name, solution)
 				bestfor[map_name] = max(bestfor[map_name], submit_game_response['score'])
 				print(map_name, submit_game_response)
