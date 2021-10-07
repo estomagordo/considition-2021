@@ -1,5 +1,5 @@
 from itertools import permutations
-from math import e
+from package import Package
 
 class BruteSolver:
     def __init__(self, game_info, volume_weight, weight_class_weight, order_class_weight, shake, weld):
@@ -20,14 +20,30 @@ class BruteSolver:
         self.placed_packages = []
         self.create_space()
 
-    def package(self, raw_package):
-        
-
     def packager(self, raw_packages):
+        packages = list(map(Package, raw_packages))
 
+        if self.weld:
+            while True:
+                to_remove = -1
+
+                for i in range(len(packages)-1):
+                    if to_remove != -1:
+                        break
+                    for j in range(i+1, len(packages)):
+                        if packages[i].try_merge(packages[j]):
+                            to_remove = j
+                            break
+
+                if to_remove == -1:
+                    break
+
+                packages = packages[:to_remove] + packages[to_remove+1:]
+
+        return packages
     
     def prioritizer(self, package):
-        return self.volume_weight * -package['height'] * package['width'] * package['length'] - self.weight_class_weight * (package['weightClass']+1) - self.order_class_weight * (package['orderClass']+1)
+        return self.volume_weight * -package.volum() - self.weight_class_weight * (package.weight_class+1) - self.order_class_weight * (package.order_class+1)
 
     def create_space(self):
         self.space = []
@@ -60,38 +76,38 @@ class BruteSolver:
             yield self.placed_packages
 
     def place_package(self, package):
-        dimensions = sorted([package['length'], package['height'], package['width']])
-
-        for p in permutations(dimensions):
-            for x in range(self.vehicle_length+1 - p[0]):
-                for z in range(self.vehicle_height+1 - p[2]):
-                    for y in range(self.vehicle_width+1 - p[1]):
+        for rotation in range(6):
+            for x in range(self.vehicle_length+1 - package.length()):
+                for z in range(self.vehicle_height+1 - package.height()):
+                    for y in range(self.vehicle_width+1 - package.width()):
                         
                         valid = True
 
-                        for dx in range(p[0]):
+                        for dx in range(package.length()):
                             if not valid:
                                 break
-                            for dz in range(p[2]):
+                            for dz in range(package.height()):
                                 if not valid:
                                     break
-                                for dy in range(p[1]):
+                                for dy in range(package.width()):
                                     if self.space[x+dx][y+dy][z+dz]:
                                         valid = False
                                         break
 
                         if valid:
-                            for dx in range(p[0]):
-                                for dz in range(p[2]):
-                                    for dy in range(p[1]):
+                            for dx in range(package.length()):
+                                for dz in range(package.height()):
+                                    for dy in range(package.width()):
                                         self.space[x+dx][y+dy][z+dz] = True
 
-                            self.placed_packages.append({'id': package['id'], 'x1': x, 'x2': x, 'x3': x, 'x4': x,
-                                        'x5': x + p[0], 'x6': x + p[0], 'x7': x + p[0], 'x8': x + p[0],
-                                        'y1': y, 'y2': y, 'y3': y, 'y4': y,
-                                        'y5': y + p[1], 'y6': y + p[1], 'y7': y + p[1], 'y8': y + p[1],
-                                        'z1': z, 'z2': z, 'z3': z, 'z4': z,
-                                        'z5': z + p[2], 'z6': z + p[2], 'z7': z + p[2], 'z8': z + p[2], 'weightClass': package['weightClass'], 'orderClass': package['orderClass']})
+                            for id, x1, z1, y1, x2, z2, y2, weight_class, order_class in package.offsets:
+                                self.placed_packages.append({'id': id, 'x1': x+x1, 'x2': x+x1, 'x3': x+x1, 'x4': x+x1,
+                                            'x5': x+x2, 'x6': x+x2, 'x7': x+x2, 'x8': x+x2,
+                                            'y1': y+y1, 'y2': y+y1, 'y3': y+y1, 'y4': y+y1,
+                                            'y5': y+y2, 'y6': y+y2, 'y7': y+y2, 'y8': y+y2,
+                                            'z1': z+z1, 'z2': z+z1, 'z3': z+z1, 'z4': z+z1,
+                                            'z5': z+z2, 'z6': z+z2, 'z7': z+z2, 'z8': z+x2, 'weightClass': weight_class, 'orderClass': order_class})
 
                             return True
+            package.rotate()
         return False

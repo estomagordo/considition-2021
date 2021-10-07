@@ -9,3 +9,9 @@ TODO: Also, maybe try and make light packages as tall as possible?
 TODO: Max dimensions post weld?
 
 TODO: Hill climbing.
+
+TODO: update package and weight class when welding
+
+TODO: Try and consider light part when rotating welded?
+
+TODO: Allow welding of more than 2
