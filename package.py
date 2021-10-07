@@ -14,9 +14,9 @@ class Package:
         self.rotation = (self.rotation + 1) % 6
 
     def length(self):
-        if self.rotation < 2:
+        if self.rotation in (0, 1):
             return self.dimensions()[0]
-        if self.rotation < 4:
+        if self.rotation in (2, 4):
             return self.dimensions()[1]
         return self.dimensions()[2]
 
@@ -28,7 +28,7 @@ class Package:
         return self.dimensions()[2]
 
     def width(self):
-        if self.rotation > 3:
+        if self.rotation in (4, 5):
             return self.dimensions()[0]
         if self.rotation in (1, 3):
             return self.dimensions()[1]
@@ -44,19 +44,26 @@ class Package:
         if len(other.offsets) > 1:
             return False
 
+        other_id = other.offsets[0][0]
         other_weight_class = other.offsets[0][-2]
         other_order_class = other.offsets[0][-1]
 
         for rotations in range(6):
             if self.length() == other.length():
                 if self.height() == other.height():
-                    self.offsets.append([other.offsets[0][0], 0, 0, self.width(), self.length(), self.height(), self.width()+other.width(), other_weight_class, other_order_class])
+                    self.offsets.append([other_id, 0, 0, self.width(), self.length(), self.height(), self.width()+other.width(), other_weight_class, other_order_class])
+                    if other_id == 11:
+                        print('a', self.offsets, self, other)
                     return True
                 if self.width() == other.width():
-                    self.offsets.append([other.offsets[0][0], 0, self.height(), 0, self.length(), self.height()+other.height(), self.width(), other_weight_class, other_order_class])
+                    self.offsets.append([other_id, 0, self.height(), 0, self.length(), self.height()+other.height(), self.width(), other_weight_class, other_order_class])
+                    if other_id == 11:
+                        print('b', self.offsets, self, other)
                     return True
             if self.height() == other.height() and self.width() == other.width():
-                self.offsets.append([other.offsets[0][0], self.length(), 0, 0, self.length()+other.length(), self.height(), self.width(), other_weight_class, other_order_class])
+                self.offsets.append([other_id, self.length(), 0, 0, self.length()+other.length(), self.height(), self.width(), other_weight_class, other_order_class])
+                if other_id == 11:
+                    print('c', self.offsets, self, other)
                 return True
 
             other.rotate()
