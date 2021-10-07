@@ -62,3 +62,6 @@ class Package:
             other.rotate()
 
         return False
+
+    def __str__(self):
+        return f'Ids: {[offset[0] for offset in self.offsets]}, length: {self.length()}, height: {self.height()}, width: {self.width()}'

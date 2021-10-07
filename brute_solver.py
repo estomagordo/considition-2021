@@ -33,6 +33,7 @@ class BruteSolver:
                     for j in range(i+1, len(packages)):
                         if packages[i].try_merge(packages[j]):
                             to_remove = j
+                            print('Successfully welded!', i, j, packages[i], packages[j])
                             break
 
                 if to_remove == -1:
