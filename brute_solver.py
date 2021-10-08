@@ -119,7 +119,15 @@ class BruteSolver:
 
         return False
 
+    def pre_rotate(self, package):
+        targetlength = max(package.dimensions)
+        
+        while package.length() != targetlength:
+            package.rotate()
+
     def place_package(self, package):
+        self.pre_rotate(package)
+
         for rotation in range(6):
             for x in range(self.vehicle_length+1 - package.length()):
                 for z in range(self.vehicle_height+1 - package.height()):                    
