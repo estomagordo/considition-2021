@@ -119,3 +119,6 @@ class Package:
 
     def __str__(self):
         return f'Ids: {[package.id for package in self.packages]}, length: {self.length()}, height: {self.height()}, width: {self.width()}'
+
+    def __repr__(self):
+        return self.__str__()
