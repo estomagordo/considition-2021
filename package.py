@@ -80,7 +80,7 @@ class Package:
             return 0
         if self.rotation in (0, 5):
             return 1
-        return self.dimensions[2]
+        return 2
 
     def rey(self):
         if self.rotation in (4, 5):
@@ -100,16 +100,29 @@ class Package:
             if self.length() == other.length():
                 if self.height() == other.height():
                     other.rotation = self.rotation
-                    other.offsets = [other.offsets[other.rex()], other.offsets[other.rez()], other.offsets[other.rey()]]
-                    other.dimensions = [other.dimensions[other.rex()], other.dimensions[other.rez()], other.dimensions[other.rey()]]
+                    a = [i for i in range(3) if other.dimensions[i] == self.length()][0]
+                    b = [i for i in range(3) if other.dimensions[i] == self.height() and i != a][0]
+                    c = [i for i in range(3) if i not in (a, b)][0]
+                    other.offsets = [other.offsets[a], other.offsets[b], other.offsets[c]]
+                    other.dimensions = [other.dimensions[a], other.dimensions[b], other.dimensions[c]]
                     self.packages.append(other)
                     return True
                 if self.width() == other.width():
                     other.rotation = self.rotation
+                    a = [i for i in range(3) if other.dimensions[i] == self.length()][0]
+                    c = [i for i in range(3) if other.dimensions[i] == self.width() and i != a][0]
+                    b = [i for i in range(3) if i not in (a, c)][0]
+                    other.offsets = [other.offsets[a], other.offsets[b], other.offsets[c]]
+                    other.dimensions = [other.dimensions[a], other.dimensions[b], other.dimensions[c]]
                     self.packages.append(other)
                     return True
             if self.height() == other.height() and self.width() == other.width():
                 other.rotation = self.rotation
+                b = [i for i in range(3) if other.dimensions[i] == self.height()][0]
+                c = [i for i in range(3) if other.dimensions[i] == self.width() and i != b][0]
+                a = [i for i in range(3) if i not in (b, c)][0]
+                other.offsets = [other.offsets[a], other.offsets[b], other.offsets[c]]
+                other.dimensions = [other.dimensions[a], other.dimensions[b], other.dimensions[c]]
                 self.packages.append(other)
                 return True
 
