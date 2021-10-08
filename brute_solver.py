@@ -77,9 +77,13 @@ class BruteSolver:
             yield self.placed_packages
 
     def can_place(self, x, y, z, package):
-        for dx in range(package.length()):
-            for dz in range(package.height()):
-                for dy in range(package.width()):
+        xlim = package.length()
+        zlim = package.height()
+        ylim = package.width()
+
+        for dx in range(xlim):
+            for dz in range(zlim):
+                for dy in range(ylim):
                     if self.space[x+dx][y+dy][z+dz]:
                         return False
 
@@ -108,7 +112,7 @@ class BruteSolver:
     def place_package(self, package):
         for rotation in range(6):
             for x in range(self.vehicle_length+1 - package.length()):
-                # print(len(self.placed_packages), package.id, rotation, x, self.vehicle_length+1 - package.length())
+                print(len(self.placed_packages), package.id, rotation, x, self.vehicle_length+1 - package.length())
                 for z in range(self.vehicle_height+1 - package.height()):                    
                     for y in range(self.vehicle_width+1 - package.width()):
                         if not self.can_place(x, y, z, package):
