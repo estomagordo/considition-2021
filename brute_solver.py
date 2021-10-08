@@ -44,7 +44,7 @@ class BruteSolver:
         return packages
     
     def prioritizer(self, package):
-        return self.volume_weight * -package.volume() - self.weight_class_weight * (package.weight_class+1) - self.order_class_weight * (package.order_class+1)
+        return self.volume_weight * -package.volume() - self.weight_class_weight * (package.weighted_weight_class() +1) - self.order_class_weight * (package.weighted_order_class()+1)
 
     def create_space(self):
         self.space = []
@@ -72,7 +72,7 @@ class BruteSolver:
             for i, package in enumerate(self.packages):
                 if not self.place_package(package):
                     print('TRAGEDY on parcel', i)
-                # print('Placed package', i+1, 'out of', len(self.packages))
+                print('Placed package', i+1, 'out of', len(self.packages))
 
             yield self.placed_packages
 

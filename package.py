@@ -10,6 +10,12 @@ class Package:
         self.weight_class = raw_package['weightClass']
         self.order_class = raw_package['orderClass']
 
+    def weighted_weight_class(self):
+        return sum(p.weight_class for p in self.packages)/len(self.packages)
+
+    def weighted_order_class(self):
+        return sum(p.order_class for p in self.packages)/len(self.packages)
+
     def rotate(self):
         for package in self.packages:
             package.rotation = (package.rotation + 1) % 6
