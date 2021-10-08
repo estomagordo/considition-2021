@@ -14,7 +14,7 @@ class Package:
         return self.weight_class
 
     def weighted_order_class(self):
-        return self.order_class
+        return sum(p.order_class for p in self.packages)/len(self.packages)
 
     def rotate(self):
         for package in self.packages:
