@@ -4,7 +4,7 @@ class Package:
     def __init__(self, raw_package):
         self.id = raw_package['id']
         self.offsets = [0, 0, 0]
-        self.dimensions = [raw_package['length', raw_package['height'], raw_package['width']]]
+        self.dimensions = [raw_package['length'], raw_package['height'], raw_package['width']]
         self.packages = [self]
         self.rotation = 0
         self.weight_class = raw_package['weightClass']
@@ -61,7 +61,7 @@ class Package:
     def height(self):
         return max(package.z1() + package.z2() for package in self.packages)
 
-    def length(self):
+    def width(self):
         return max(package.y1() + package.y2() for package in self.packages)
 
     def volume(self):
@@ -94,4 +94,4 @@ class Package:
         return False
 
     def __str__(self):
-        return f'Ids: {[offset[0] for offset in self.offsets]}, length: {self.length()}, height: {self.height()}, width: {self.width()}'
+        return f'Ids: {[package.id for package in self.packages]}, length: {self.length()}, height: {self.height()}, width: {self.width()}'

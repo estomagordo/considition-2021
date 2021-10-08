@@ -102,12 +102,12 @@ class BruteSolver:
                                         self.space[x+dx][y+dy][z+dz] = True
 
                             for p in package.packages:
-                                x1 = p.x1
-                                x2 = p.x2
-                                y1 = p.y1
-                                y2 = p.y2
-                                z1 = p.z1
-                                z2 = p.z2
+                                x1 = p.x1()
+                                x2 = p.x2()
+                                y1 = p.y1()
+                                y2 = p.y2()
+                                z1 = p.z1()
+                                z2 = p.z2()
                                 weight_class = p.weight_class
                                 order_class = p.order_class
                                 self.placed_packages.append({'id': id, 'x1': x+x1, 'x2': x+x1, 'x3': x+x1, 'x4': x+x1,
