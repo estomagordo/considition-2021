@@ -11,7 +11,8 @@ class Package:
         self.order_class = raw_package['orderClass']
 
     def rotate(self):
-        self.rotation = (self.rotation + 1) % 6
+        for package in self.packages:
+            package.rotation = (package.rotation + 1) % 6
 
     def x1(self):
         if self.rotation in (0, 1):
