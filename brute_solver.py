@@ -110,7 +110,7 @@ class BruteSolver:
                                 z2 = p.z2()
                                 weight_class = p.weight_class
                                 order_class = p.order_class
-                                self.placed_packages.append({'id': package.id, 'x1': x+x1, 'x2': x+x1, 'x3': x+x1, 'x4': x+x1,
+                                self.placed_packages.append({'id': p.id, 'x1': x+x1, 'x2': x+x1, 'x3': x+x1, 'x4': x+x1,
                                             'x5': x+x2, 'x6': x+x2, 'x7': x+x2, 'x8': x+x2,
                                             'y1': y+y1, 'y2': y+y1, 'y3': y+y1, 'y4': y+y1,
                                             'y5': y+y2, 'y6': y+y2, 'y7': y+y2, 'y8': y+y2,
