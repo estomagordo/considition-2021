@@ -90,17 +90,27 @@ class BruteSolver:
         return True
 
     def any_floats(self, x, y, z, package):
-        for p in package.packages:
-            if p.z1() == 0:
+        for i, p in enumerate(package.packages):
+            zlo = p.z1()
+
+            if zlo == 0:
+                continue
+
+            if i > 0 and any(pack.z1() < zlo for pack in package.packages[:i]):
                 continue
 
             floats = True
 
-            for dx in range(x+p.x1(), x+p.x2()):
+            xlo = p.x1()
+            xhi = p.x2()
+            ylo = p.y1()
+            yhi = p.y2()
+
+            for dx in range(x+xlo, x+xhi):
                 if not floats:
                     break
-                for dy in range(y+p.y1(), y+p.y2()):
-                    if self.space[dx][dy][p.z1()-1]:
+                for dy in range(y+ylo, y+yhi):
+                    if self.space[dx][dy][zlo-1]:
                         floats = False
                         break
 
