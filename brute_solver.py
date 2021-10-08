@@ -79,9 +79,9 @@ class BruteSolver:
     def place_package(self, package):
         for rotation in range(6):
             for x in range(self.vehicle_length+1 - package.length()):
-                for z in range(self.vehicle_height+1 - package.height()):
-                    for y in range(self.vehicle_width+1 - package.width()):
-                        
+                print(len(self.placed_packages), package.id, rotation, x, self.vehicle_length+1 - package.length())
+                for z in range(self.vehicle_height+1 - package.height()):                    
+                    for y in range(self.vehicle_width+1 - package.width()):                        
                         valid = True
 
                         for dx in range(package.length()):
@@ -95,6 +95,9 @@ class BruteSolver:
                                         valid = False
                                         break
 
+                        if not valid:
+                            continue
+                        
                         anyfloats = False
 
                         for p in package.packages:
@@ -117,7 +120,7 @@ class BruteSolver:
                             if floats:
                                 anyfloats = True
 
-                        if anyfloats or (not valid):
+                        if anyfloats:
                             continue
                         
                         for dx in range(package.length()):
