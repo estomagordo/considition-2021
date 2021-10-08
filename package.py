@@ -67,6 +67,27 @@ class Package:
 
     def volume(self):
         return self.length() * self.height() * self.width()
+
+    def rex(self):
+        if self.rotation in (0, 1):
+            return 0
+        if self.rotation in (2, 4):
+            return 1
+        return 2
+
+    def rez(self):
+        if self.rotation in (2, 3):
+            return 0
+        if self.rotation in (0, 5):
+            return 1
+        return self.dimensions[2]
+
+    def rey(self):
+        if self.rotation in (4, 5):
+            return 0
+        if self.rotation in (1, 3):
+            return 1
+        return 2
     
     def try_merge(self, other):
         if len(self.packages) > 1:
@@ -79,6 +100,8 @@ class Package:
             if self.length() == other.length():
                 if self.height() == other.height():
                     other.rotation = self.rotation
+                    other.offsets = [other.offsets[other.rex()], other.offsets[other.rez()], other.offsets[other.rey()]]
+                    other.dimensions = [other.dimensions[other.rex()], other.dimensions[other.rez()], other.dimensions[other.rey()]]
                     self.packages.append(other)
                     return True
                 if self.width() == other.width():
