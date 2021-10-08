@@ -93,7 +93,7 @@ class BruteSolver:
         for i, p in enumerate(package.packages):
             zlo = p.z1()
 
-            if zlo == 0:
+            if z+zlo == 0:
                 continue
 
             if i > 0 and any(pack.z1() < zlo for pack in package.packages[:i]):
@@ -110,7 +110,7 @@ class BruteSolver:
                 if not floats:
                     break
                 for dy in range(y+ylo, y+yhi):
-                    if self.space[dx][dy][zlo-1]:
+                    if self.space[dx][dy][z+zlo-1]:
                         floats = False
                         break
 
@@ -122,7 +122,6 @@ class BruteSolver:
     def place_package(self, package):
         for rotation in range(6):
             for x in range(self.vehicle_length+1 - package.length()):
-                print(len(self.placed_packages), package.id, rotation, x, self.vehicle_length+1 - package.length())
                 for z in range(self.vehicle_height+1 - package.height()):                    
                     for y in range(self.vehicle_width+1 - package.width()):
                         if not self.can_place(x, y, z, package):
