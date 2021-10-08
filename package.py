@@ -57,13 +57,13 @@ class Package:
         return self.offsets[2] + self.dimensions[2]
 
     def length(self):
-        return max(package.x1() + package.x2() for package in self.packages)
+        return max(package.x2() for package in self.packages)
 
     def height(self):
-        return max(package.z1() + package.z2() for package in self.packages)
+        return max(package.z2() for package in self.packages)
 
     def width(self):
-        return max(package.y1() + package.y2() for package in self.packages)
+        return max(package.y2() for package in self.packages)
 
     def volume(self):
         return self.length() * self.height() * self.width()
