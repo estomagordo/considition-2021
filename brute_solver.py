@@ -33,7 +33,7 @@ class BruteSolver:
                     for j in range(i+1, len(packages)):
                         if packages[i].try_merge(packages[j]):
                             to_remove = j
-                            print('Successfully welded!', i, j, packages[i], packages[j])
+                            # print('Successfully welded!', i, j, packages[i], packages[j])
                             break
 
                 if to_remove == -1:
@@ -64,7 +64,7 @@ class BruteSolver:
                 for i, package in enumerate(package_list):
                     if not self.place_package(package):
                         print('TRAGEDY on parcel', i)
-                    print('Placed package', i+1, 'out of', len(self.packages))
+                    # print('Placed package', i+1, 'out of', len(self.packages))
 
                 yield self.placed_packages
                 self.reset()
@@ -72,7 +72,7 @@ class BruteSolver:
             for i, package in enumerate(self.packages):
                 if not self.place_package(package):
                     print('TRAGEDY on parcel', i)
-                print('Placed package', i+1, 'out of', len(self.packages))
+                # print('Placed package', i+1, 'out of', len(self.packages))
 
             yield self.placed_packages
 
@@ -120,7 +120,7 @@ class BruteSolver:
         return False
 
     def pre_rotate(self, package):
-        targetlength = max(package.length(), package.height(), package.width())
+        targetlength = min(package.length(), package.height(), package.width())
         
         while package.length() != targetlength:
             package.rotate()
