@@ -76,51 +76,45 @@ class BruteSolver:
 
             yield self.placed_packages
 
+    def can_place(self, x, y, z, package):
+        for dx in range(package.length()):
+            for dz in range(package.height()):
+                for dy in range(package.width()):
+                    if self.space[x+dx][y+dy][z+dz]:
+                        return False
+
+        return True
+
+    def any_floats(self, x, y, z, package):
+        for p in package.packages:
+            if p.z1() == 0:
+                continue
+
+            floats = True
+
+            for dx in range(x+p.x1(), x+p.x2()):
+                if not floats:
+                    break
+                for dy in range(y+p.y1(), y+p.y2()):
+                    if self.space[dx][dy][p.z1()-1]:
+                        floats = False
+                        break
+
+            if floats:
+                return True
+
+        return False
+
     def place_package(self, package):
         for rotation in range(6):
             for x in range(self.vehicle_length+1 - package.length()):
-                print(len(self.placed_packages), package.id, rotation, x, self.vehicle_length+1 - package.length())
+                # print(len(self.placed_packages), package.id, rotation, x, self.vehicle_length+1 - package.length())
                 for z in range(self.vehicle_height+1 - package.height()):                    
-                    for y in range(self.vehicle_width+1 - package.width()):                        
-                        valid = True
-
-                        for dx in range(package.length()):
-                            if not valid:
-                                break
-                            for dz in range(package.height()):
-                                if not valid:
-                                    break
-                                for dy in range(package.width()):
-                                    if self.space[x+dx][y+dy][z+dz]:
-                                        valid = False
-                                        break
-
-                        if not valid:
+                    for y in range(self.vehicle_width+1 - package.width()):
+                        if not self.can_place(x, y, z, package):
                             continue
                         
-                        anyfloats = False
-
-                        for p in package.packages:
-                            if anyfloats:
-                                break
-
-                            if p.z1() == 0:
-                                continue
-
-                            floats = True
-
-                            for dx in range(x+p.x1(), x+p.x2()):
-                                if not floats:
-                                    break
-                                for dy in range(y+p.y1(), y+p.y2()):
-                                    if self.space[dx][dy][p.z1()-1]:
-                                        floats = False
-                                        break
-
-                            if floats:
-                                anyfloats = True
-
-                        if anyfloats:
+                        if self.any_floats(x, y, z, package):
                             continue
                         
                         for dx in range(package.length()):
