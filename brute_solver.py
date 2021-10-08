@@ -104,31 +104,30 @@ class BruteSolver:
                                 if self.space[xx][yy][z-1]:
                                     floating = False
 
-                        if floating:
+                        if floating or (not valid):
                             continue
+                        
+                        for dx in range(package.length()):
+                            for dz in range(package.height()):
+                                for dy in range(package.width()):
+                                    self.space[x+dx][y+dy][z+dz] = True
 
-                        if valid:
-                            for dx in range(package.length()):
-                                for dz in range(package.height()):
-                                    for dy in range(package.width()):
-                                        self.space[x+dx][y+dy][z+dz] = True
+                        for p in package.packages:
+                            x1 = p.x1()
+                            x2 = p.x2()
+                            y1 = p.y1()
+                            y2 = p.y2()
+                            z1 = p.z1()
+                            z2 = p.z2()
+                            weight_class = p.weight_class
+                            order_class = p.order_class
+                            self.placed_packages.append({'id': p.id, 'x1': x+x1, 'x2': x+x1, 'x3': x+x1, 'x4': x+x1,
+                                        'x5': x+x2, 'x6': x+x2, 'x7': x+x2, 'x8': x+x2,
+                                        'y1': y+y1, 'y2': y+y1, 'y3': y+y1, 'y4': y+y1,
+                                        'y5': y+y2, 'y6': y+y2, 'y7': y+y2, 'y8': y+y2,
+                                        'z1': z+z1, 'z2': z+z1, 'z3': z+z1, 'z4': z+z1,
+                                        'z5': z+z2, 'z6': z+z2, 'z7': z+z2, 'z8': z+z2, 'weightClass': weight_class, 'orderClass': order_class})
 
-                            for p in package.packages:
-                                x1 = p.x1()
-                                x2 = p.x2()
-                                y1 = p.y1()
-                                y2 = p.y2()
-                                z1 = p.z1()
-                                z2 = p.z2()
-                                weight_class = p.weight_class
-                                order_class = p.order_class
-                                self.placed_packages.append({'id': p.id, 'x1': x+x1, 'x2': x+x1, 'x3': x+x1, 'x4': x+x1,
-                                            'x5': x+x2, 'x6': x+x2, 'x7': x+x2, 'x8': x+x2,
-                                            'y1': y+y1, 'y2': y+y1, 'y3': y+y1, 'y4': y+y1,
-                                            'y5': y+y2, 'y6': y+y2, 'y7': y+y2, 'y8': y+y2,
-                                            'z1': z+z1, 'z2': z+z1, 'z3': z+z1, 'z4': z+z1,
-                                            'z5': z+z2, 'z6': z+z2, 'z7': z+z2, 'z8': z+z2, 'weightClass': weight_class, 'orderClass': order_class})
-
-                            return True
+                        return True
             package.rotate()
         return False
