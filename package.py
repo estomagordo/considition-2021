@@ -112,8 +112,8 @@ class Package:
                     a = [i for i in range(3) if other.dimensions[i] == self.length()][0]
                     c = [i for i in range(3) if other.dimensions[i] == self.width() and i != a][0]
                     b = [i for i in range(3) if i not in (a, c)][0]
-                    other.offsets = [other.offsets[a], other.offsets[b], other.offsets[c]]
-                    other.dimensions = [other.dimensions[a], other.dimensions[b]+self.height(), other.dimensions[c]]
+                    other.offsets = [other.offsets[a], other.offsets[b]+self.height(), other.offsets[c]]
+                    other.dimensions = [other.dimensions[a], other.dimensions[b], other.dimensions[c]]
                     self.packages.append(other)
                     return True
             if self.height() == other.height() and self.width() == other.width():
@@ -121,8 +121,8 @@ class Package:
                 b = [i for i in range(3) if other.dimensions[i] == self.height()][0]
                 c = [i for i in range(3) if other.dimensions[i] == self.width() and i != b][0]
                 a = [i for i in range(3) if i not in (b, c)][0]
-                other.offsets = [other.offsets[a], other.offsets[b], other.offsets[c]]
-                other.dimensions = [other.dimensions[a]+self.length(), other.dimensions[b], other.dimensions[c]]
+                other.offsets = [other.offsets[a]+self.length(), other.offsets[b], other.offsets[c]]
+                other.dimensions = [other.dimensions[a], other.dimensions[b], other.dimensions[c]]
                 self.packages.append(other)
                 return True
 
