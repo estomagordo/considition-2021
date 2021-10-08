@@ -95,6 +95,18 @@ class BruteSolver:
                                         valid = False
                                         break
 
+                        floating = z > 0
+                        
+                        for xx in range(x, x+dx):
+                            if not floating:
+                                break
+                            for yy in range(y, y+dy):
+                                if self.space[xx][yy][z-1]:
+                                    floating = False
+
+                        if floating:
+                            continue
+
                         if valid:
                             for dx in range(package.length()):
                                 for dz in range(package.height()):
