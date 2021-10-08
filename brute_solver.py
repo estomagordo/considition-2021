@@ -120,7 +120,7 @@ class BruteSolver:
         return False
 
     def pre_rotate(self, package):
-        targetlength = max(package.dimensions)
+        targetlength = max(package.length(), package.height(), package.width())
         
         while package.length() != targetlength:
             package.rotate()
