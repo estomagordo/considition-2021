@@ -64,7 +64,7 @@ class BruteSolver:
                 for i, package in enumerate(package_list):
                     if not self.place_package(package):
                         print('TRAGEDY on parcel', i)
-                    # print('Placed package', i+1, 'out of', len(self.packages))
+                    print('Placed package', i+1, 'out of', len(self.packages))
 
                 yield self.placed_packages
                 self.reset()
@@ -95,16 +95,29 @@ class BruteSolver:
                                         valid = False
                                         break
 
-                        floating = z > 0
-                        
-                        for xx in range(x, x+dx):
-                            if not floating:
-                                break
-                            for yy in range(y, y+dy):
-                                if self.space[xx][yy][z-1]:
-                                    floating = False
+                        anyfloats = False
 
-                        if floating or (not valid):
+                        for p in package.packages:
+                            if anyfloats:
+                                break
+
+                            if p.z1() == 0:
+                                continue
+
+                            floats = True
+
+                            for dx in range(x+p.x1(), x+p.x2()):
+                                if not floats:
+                                    break
+                                for dy in range(y+p.y1(), y+p.y2()):
+                                    if self.space[dx][dy][p.z1()-1]:
+                                        floats = False
+                                        break
+
+                            if floats:
+                                anyfloats = True
+
+                        if anyfloats or (not valid):
                             continue
                         
                         for dx in range(package.length()):
