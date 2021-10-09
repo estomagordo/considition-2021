@@ -24,6 +24,8 @@ class BruteSolver:
         packages = list(map(Package, raw_packages))
 
         if self.weld:
+            original_count = len(packages)
+
             while True:
                 to_remove = -1
 
@@ -40,6 +42,8 @@ class BruteSolver:
                     break
 
                 packages = packages[:to_remove] + packages[to_remove+1:]
+
+            print(f'Welded down from {original_count} to {len(packages)} packages.')
 
         return packages
     
