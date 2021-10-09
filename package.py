@@ -1,5 +1,3 @@
-# For now: Only allow welding two packages together.
-
 class Package:
     def __init__(self, raw_package):
         self.id = raw_package['id']
@@ -96,12 +94,6 @@ class Package:
         return 2
     
     def try_merge(self, other):
-        if len(self.packages) > 1:
-            return False
-
-        if len(other.packages) > 1:
-            return False
-
         for rotations in range(6):
             if self.length() == other.length():
                 if self.height() == other.height():
