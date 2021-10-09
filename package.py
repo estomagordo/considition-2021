@@ -94,6 +94,12 @@ class Package:
         return 2
     
     def try_merge(self, other):
+        if self.weight_class != other.weight_class:
+            return False
+
+        if self.order_class != other.order_class:
+            return False
+
         for rotations in range(6):
             if self.length() == other.length():
                 if self.height() == other.height():
