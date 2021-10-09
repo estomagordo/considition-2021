@@ -24,8 +24,11 @@ def main():
 
 	for iteration in range(times):
 		volume_weight = rand.gauss(0.96, 0.29)
-		weight_class_weight = rand.gauss(9437.0, 3021.0)
-		order_class_weight = rand.gauss(10969.0, 2612.0)
+		weight_class_weight = rand.gauss(23437.0, 4621.0)
+		order_class_weight = rand.gauss(23969.0, 5612.0)
+		volume_weight = 0.920933831169626
+		weight_class_weight = 20950.389095089384
+		order_class_weight = 20295.98922990018
 		print(f'iteration: {iteration+1}/{times} after {round(time()-t, 3)} seconds, with volume weight: {volume_weight}, weight class weight: {weight_class_weight}, order class weight: {order_class_weight}')
 		print(bestfor)
 
